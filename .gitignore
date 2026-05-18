@@ -2,4 +2,5 @@ img/
 venv/
 .ipynb_checkpoints/
 rawCsv/
+processedCsv/
 img/
