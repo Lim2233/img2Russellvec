@@ -5,8 +5,9 @@ import numpy as np
 from PIL import Image
 
 '''
+
 用途
-把csv中的数组转成图片
+把csv中的数组转成图片,命名格式为 {行号(占5位)}_{emotion}{usage}
 依赖
 pip install pillow numpy
 用法
