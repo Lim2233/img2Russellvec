@@ -5,5 +5,7 @@ rawCsv/
 processedCsv/
 slicedCsv/
 transformed/
+output/
+FeatureA/
 img/
 __pycache__/

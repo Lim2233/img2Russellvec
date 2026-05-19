@@ -5,6 +5,8 @@
 
  - [x] 处理图片 扩图加色彩x
  - [x] 心理学先验映射
+ - [ ] FeatureA
+ - [ ] FeatureB
 
 ## 清洗步骤  
 - 准备三个文件夹 rawCsv slicedCsv processedCsv
