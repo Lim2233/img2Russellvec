@@ -15,3 +15,5 @@
 - 使用 CLI_makeImgBigAndColorful.py 处理切割后的Csv文件
 - 最终得到每1000行切片的Csv表格和img文件夹，Csv中只存图片路径
 - 接着应用 CLI_emotion2VAVec2.py 替换 emotion 为 VA向量
+### 5.19更新
+- 在pipeline.py文件中填写路径，然后运行即可
