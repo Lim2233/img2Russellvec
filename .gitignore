@@ -4,5 +4,6 @@ venv/
 rawCsv/
 processedCsv/
 slicedCsv/
+transformed/
 img/
 __pycache__/
