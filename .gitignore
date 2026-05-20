@@ -1,12 +1,4 @@
-img/
 venv/
 .ipynb_checkpoints/
-rawCsv/
-processedCsv/
-slicedCsv/
-transformed/
-output/
-outTemp/
-FeatureA/
-img/
+Data/
 __pycache__/
