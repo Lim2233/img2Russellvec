@@ -3,9 +3,9 @@
 # 未经验证的工作不上传
 
 
- - [x] 处理图片 扩图加色彩x
+ - [x] 处理图片 扩图加色彩
  - [x] 心理学先验映射
- - [ ] FeatureA
+ - [x] FeatureA
  - [ ] FeatureB
 
 ## 清洗步骤  
@@ -19,3 +19,4 @@
 - 在pipeline.py文件中填写路径，然后运行即可
 ### 5.20更新
 - CLI_getFeatureA.py可以提取768维特征 
+- 集成该功能到pipeline中
