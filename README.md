@@ -17,3 +17,5 @@
 - 接着应用 CLI_emotion2VAVec2.py 替换 emotion 为 VA向量
 ### 5.19更新
 - 在pipeline.py文件中填写路径，然后运行即可
+### 5.20更新
+- CLI_getFeatureA.py可以提取768维特征 

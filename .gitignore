@@ -6,6 +6,7 @@ processedCsv/
 slicedCsv/
 transformed/
 output/
+outTemp/
 FeatureA/
 img/
 __pycache__/
