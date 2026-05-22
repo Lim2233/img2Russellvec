@@ -20,3 +20,6 @@
 ### 5.20更新
 - CLI_getFeatureA.py可以提取768维特征 
 - 集成该功能到pipeline中
+### 5.22更新
+- 使用新版的 [CLI_getFeatureB.py](src/CLI_Tools/CLI_getFeatureB.py) 来提取 featureB
+- 注意需要依赖根目录的模型文件 [face_landmarker.task](face_landmarker.task)
