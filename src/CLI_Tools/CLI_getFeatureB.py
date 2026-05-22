@@ -36,11 +36,34 @@ def compute_distance(point1, point2):
 def extract_feature_b(image_path, face_mesh):
     default_feature = "[0.0, 0.0, 0.0, 0.0]"
     
+    # 诊断 1：看看从 CSV 里到底读出了什么路径
+    print(f"\n[诊断] 正在处理的路径是: '{image_path}'")
+    
+    if not image_path:
+        print("[死因] 路径为空！请检查 CSV 的表头是不是叫 'image_path'。")
+        return default_feature
+        
     if not os.path.exists(image_path):
+        print("[死因] 找不到文件！说明相对路径拼错了，或者当前运行目录不对。")
         return default_feature
     
-    img = cv2.imread(image_path)
+    # 替换为防中文路径报错的读取法
+    img = cv2.imdecode(np.fromfile(image_path, dtype=np.uint8), cv2.IMREAD_COLOR)
     if img is None:
+        print("[死因] 图片存在，但 OpenCV 读不出来！可能图片已损坏。")
+        return default_feature
+    
+    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+    
+    try:
+        mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img_rgb)
+        results = face_mesh.detect(mp_image)
+    except Exception as e:
+        print(f"[死因] MediaPipe 运行崩溃: {e}")
+        return default_feature
+    
+    if not results.face_landmarks:
+        print("[死因] 模型运行成功，但真的没检测到人脸。")
         return default_feature
     
     img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -93,7 +116,7 @@ def extract_feature_b(image_path, face_mesh):
     
     return f"[{d_brow:.4f}, {h_mouth:.4f}, {w_eye:.4f}, {h_jaw:.4f}]"
 
-def process_csv(input_file, output_file, face_mesh):
+def process_csv(input_file, output_file, face_mesh, input_dir):
     with open(input_file, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         fieldnames = reader.fieldnames.copy()
@@ -103,7 +126,7 @@ def process_csv(input_file, output_file, face_mesh):
         rows = list(reader)
     
     for row in tqdm(rows, desc=f"Processing {os.path.basename(input_file)}", leave=False):
-        image_path = row.get('image_path', '')
+        image_path = os.path.join(input_dir , row.get('image_path', '')) #这边处理路径的时候搞错了，前面要加一段
         row['feature B'] = extract_feature_b(image_path, face_mesh)
     
     os.makedirs(os.path.dirname(output_file), exist_ok=True)
@@ -122,11 +145,12 @@ def main():
     # 注意：请确保运行目录下存在 'face_landmarker.task' 模型文件
     base_options = python.BaseOptions(model_asset_path='face_landmarker.task')
     options = vision.FaceLandmarkerOptions(
-        base_options=base_options,
-        running_mode=vision.RunningMode.IMAGE, # 用于处理单张图片累计的模式
-        num_faces=1,                          # 相当于旧版的 max_num_faces=1
-        min_face_detection_confidence=0.5     # 相当于旧版的 min_detection_confidence=0.5
-    )
+    base_options=base_options,
+    running_mode=vision.RunningMode.IMAGE,
+    num_faces=1,
+    min_face_detection_confidence=0.5,  # [修改这里] 从 0.5 降到 0.2 或 0.3
+    min_face_presence_confidence=0.2    # [建议新增] 放宽特征点追踪的阈值
+)
     
     # 创建新版 FaceLandmarker 实例
     face_mesh = vision.FaceLandmarker.create_from_options(options)
@@ -138,7 +162,7 @@ def main():
     for csv_file in tqdm(csv_files, desc="Processing CSV files"):
         input_path = os.path.join(args.input, csv_file)
         output_path = os.path.join(args.output, csv_file)
-        process_csv(input_path, output_path, face_mesh)
+        process_csv(input_path, output_path, face_mesh, args.input)
     
     # 新版释放资源的正确方法
     face_mesh.close()

@@ -23,3 +23,5 @@
 ### 5.22更新
 - 使用新版的 [CLI_getFeatureB.py](src/CLI_Tools/CLI_getFeatureB.py) 来提取 featureB
 - 注意需要依赖根目录的模型文件 [face_landmarker.task](face_landmarker.task)
+- 加入了一点调试信息，经过排查解决了文件路径问题
+- 经验证FeatureB的实际值受到模型参数的影响 如 options.min_face_detection_confidence
