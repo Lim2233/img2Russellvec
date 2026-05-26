@@ -1,0 +1,25 @@
+Evaluation Metrics
+==============================
+MSE: 0.1410
+MAE: 0.2547
+MAE_VALENCE: 0.2613
+MAE_AROUSAL: 0.2480
+CCC: 0.7082
+ACCURACY_7CLASS: 0.5718
+MACRO_F1: 0.4911
+WEIGHTED_F1: 0.5855
+
+Per-Class Metrics
+==============================
+C0: Precision=0.3822, Recall=0.2432, F1=0.2973
+C1: Precision=0.0672, Recall=0.5333, F1=0.1194
+C2: Precision=0.4453, Recall=0.3770, F1=0.4083
+C3: Precision=0.8856, Recall=0.8599, F1=0.8725
+C4: Precision=0.5142, Recall=0.4806, F1=0.4968
+C5: Precision=0.6406, Recall=0.7277, F1=0.6814
+C6: Precision=0.6137, Recall=0.5178, F1=0.5617
+
+Inference Speed
+==============================
+MS per sample: 0.0176
+Throughput: 56970.7 samples/second
